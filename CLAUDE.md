@@ -51,3 +51,8 @@ and sends scheduled briefings.
 - Test files: test_<module>.py
 - Use pytest fixtures, not setUp/tearDown
 - Aim for 80%+ coverage on core logic
+
+## Custom Commands
+- /test-all — run linter + tests, show quality report
+- /digest-test — manual test of DigestSkill with real RSS feeds
+- /commit-push-pr [description] — commit, push, and create PR in one step
