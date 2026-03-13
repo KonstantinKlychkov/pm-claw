@@ -56,3 +56,7 @@ and sends scheduled briefings.
 - /test-all — run linter + tests, show quality report
 - /digest-test — manual test of DigestSkill with real RSS feeds
 - /commit-push-pr [description] — commit, push, and create PR in one step
+
+## MCP Servers
+- GitHub MCP — issue management, PR workflows (local scope, token not committed)
+- Context7 — up-to-date library documentation (user scope)
