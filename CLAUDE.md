@@ -16,9 +16,12 @@ and sends scheduled briefings.
 ## Project Structure
 - src/           — main application code
 - src/skills/    — OpenClaw skills (each skill = .md description + .py logic)
+  - digest_skill.py — RSS feed digest collection and formatting
+  - idea_generator.py — SCAMPER-based product idea generation
 - src/config/    — configuration and settings
 - tests/         — pytest test files
 - docs/          — project documentation
+- docs/ideas/    — generated idea files (markdown, auto-created by IdeaGeneratorSkill)
 
 ## Commands
 - Run: `python src/main.py`
