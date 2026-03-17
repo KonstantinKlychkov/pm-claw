@@ -20,6 +20,7 @@ pm-claw/
 │   ├── idea_generator.py    # IdeaGeneratorSkill (SCAMPER)
 │   ├── competitor_skill.py  # CompetitorSkill
 │   └── briefing_skill.py    # BriefingSkill
+├── deploy.sh                # скрипт деплоя (SSH + systemd)
 ├── tests/                   # 146 тестов, все проходят
 ├── .claude/
 │   ├── skills/              # test-all, digest-test
@@ -30,6 +31,7 @@ pm-claw/
 │   └── settings.json
 └── docs/
     ├── ideas/
+    ├── server-access.md     # инструкция SSH-подключения
     └── pipeline.md
 ```
 
@@ -49,6 +51,9 @@ pm-claw/
 - **Firewall:** UFW (OpenSSH разрешён)
 - **Софт:** Python 3.12.3, git 2.43.0, pip, venv
 - **SSH-ключ:** ed25519, без passphrase
+- **Сервис:** pm-claw.service (systemd, Restart=on-failure)
+- **Деплой:** `bash deploy.sh` (DEPLOY_SERVER из .env)
+- **Логи:** `journalctl -u pm-claw`
 
 ## Открытые issues
 
@@ -79,3 +84,4 @@ pm-claw/
 ## История изменений
 
 - **[дата старта]** — начальное состояние: 4 скилла, 146 тестов, 2 MCP-сервера
+- **2026-03-17** — deploy.sh, systemd-сервис, docs/server-access.md
