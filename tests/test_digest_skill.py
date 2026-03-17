@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-from src.skills.digest_skill import DigestSkill
+from src.skills.digest_skill import DigestSkill, _clean_summary, _format_digest
 
 
 @pytest.fixture
@@ -104,9 +104,6 @@ def test_generate_digest_formats_output(mock_parsed_feed) -> None:
 # --- _clean_summary ---
 
 
-from src.skills.digest_skill import _clean_summary
-
-
 def test_clean_summary_strips_html_tags() -> None:
     raw = "<p>Hello <b>world</b></p>"
     result = _clean_summary(raw)
@@ -153,22 +150,21 @@ def test_clean_summary_with_empty_string_returns_empty() -> None:
 # --- _format_digest ---
 
 
-from src.skills.digest_skill import _format_digest
-
-
 def test_format_digest_skips_empty_published() -> None:
     feeds = [
         (
             "feed.example.com",
-            [{"title": "No Date", "link": "https://feed.example.com/1", "summary": "Some text", "published": ""}],
+            [{
+                "title": "No Date",
+                "link": "https://feed.example.com/1",
+                "summary": "Some text",
+                "published": "",
+            }],
         )
     ]
     result = _format_digest(feeds)
     assert "No Date" in result
     # The published line should not appear (empty value is skipped)
-    lines = result.splitlines()
-    # No line should be only whitespace representing a date placeholder
-    date_lines = [l for l in lines if l.strip() == ""]
     # There is always one blank separator line per entry, but no extra date line
     assert result.count("    \n") == 0 or True  # guard: just ensure no crash
 
@@ -177,7 +173,12 @@ def test_format_digest_skips_empty_summary() -> None:
     feeds = [
         (
             "feed.example.com",
-            [{"title": "No Summary", "link": "https://feed.example.com/2", "summary": "", "published": "Mon, 10 Mar 2026"}],
+            [{
+                "title": "No Summary",
+                "link": "https://feed.example.com/2",
+                "summary": "",
+                "published": "Mon, 10 Mar 2026",
+            }],
         )
     ]
     result = _format_digest(feeds)
@@ -185,7 +186,7 @@ def test_format_digest_skips_empty_summary() -> None:
     assert "Mon, 10 Mar 2026" in result
     # summary line should be absent — verify no blank indented summary line sneaks in
     lines = result.splitlines()
-    indented_blank = [l for l in lines if l == "    "]
+    indented_blank = [line for line in lines if line == "    "]
     assert indented_blank == []
 
 
@@ -193,7 +194,12 @@ def test_format_digest_entry_with_both_fields_empty() -> None:
     feeds = [
         (
             "minimal.feed",
-            [{"title": "Bare Entry", "link": "https://minimal.feed/3", "summary": "", "published": ""}],
+            [{
+                "title": "Bare Entry",
+                "link": "https://minimal.feed/3",
+                "summary": "",
+                "published": "",
+            }],
         )
     ]
     result = _format_digest(feeds)
