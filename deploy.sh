@@ -12,7 +12,7 @@ PYTHON="python3.12"
 # -- 1. Clone or update repo -------------------------------------
 echo "==> Deploying to ${SERVER}..."
 
-ssh "${SERVER}" bash -s <<REMOTE
+ssh -i C:\\Users\\Redmi\\.ssh\\id_ed25519_new "${SERVER}" bash -s <<REMOTE
 set -euo pipefail
 
 echo "-- Repo --"
@@ -47,7 +47,7 @@ Type=simple
 User=deploy
 Group=deploy
 WorkingDirectory=${APP_DIR}
-ExecStart=${APP_DIR}/venv/bin/python src/main.py
+ExecStart=${APP_DIR}/venv/bin/python -m src.bot_runner
 Restart=on-failure
 RestartSec=5
 StandardOutput=journal
