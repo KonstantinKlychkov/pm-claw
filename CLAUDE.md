@@ -37,6 +37,16 @@ and sends scheduled briefings.
 - File names: snake_case
 - Max line length: 100
 
+## Dev Pipeline
+- Follow the production process steps from dev-pipeline.md
+- Before moving to the next step, check the autonomy level of the current step in dev-pipeline.md
+  - 🔴 Manual — proceed only on explicit user command
+  - 🟡 Semi-auto — execute the step, show result, ask for confirmation before proceeding
+  - 🟢 Auto — execute and move on
+- Every feature must have a GitHub Issue with the pipeline checklist from dev-pipeline.md
+- At the start of work on a feature, read the issue and continue from the current incomplete step
+- After completing a step, mark it as done in the issue checklist
+
 ## Git Conventions
 - Commit messages: conventional format (feat:, fix:, docs:, test:, chore:)
 - Commits in English
