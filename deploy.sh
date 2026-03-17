@@ -70,4 +70,14 @@ else
     sudo systemctl status "${SERVICE_NAME}" --no-pager
     exit 1
 fi
+
+# -- 5. Health check --------------------------------------------------
+echo "-- Health check --"
+source "${APP_DIR}/.env"
+RESPONSE=\$(curl -s "https://api.telegram.org/bot\${TELEGRAM_BOT_TOKEN}/getMe")
+if echo "\$RESPONSE" | grep -q '"ok":true'; then
+    echo "==> Bot is responding to Telegram API."
+else
+    echo "==> WARNING: Bot may not be responding!"
+fi
 REMOTE
