@@ -6,7 +6,8 @@
 
 - Python 3.12
 - OpenClaw framework
-- Telegram Bot API (python-telegram-bot) — пока не подключен
+- python-telegram-bot==20.7 (подключён)
+- python-dotenv — подключён
 - pytest + ruff
 - GitHub для VCS
 
@@ -15,24 +16,23 @@
 ```
 pm-claw/
 ├── CLAUDE.md
-├── src/skills/
-│   ├── digest_skill.py      # DigestSkill (RSS)
-│   ├── idea_generator.py    # IdeaGeneratorSkill (SCAMPER)
-│   ├── competitor_skill.py  # CompetitorSkill
-│   └── briefing_skill.py    # BriefingSkill
-├── deploy.sh                # скрипт деплоя (SSH + systemd)
-├── tests/                   # 146 тестов, все проходят
-├── .claude/
-│   ├── skills/              # test-all, digest-test
-│   ├── commands/            # commit-push-pr
-│   ├── agents/              # code-reviewer, test-writer
-│   ├── hooks/               # auto_lint.py (PostToolUse), block_dangerous.py (PreToolUse)
-│   ├── rules/               # testing.md
-│   └── settings.json
-└── docs/
-    ├── ideas/
-    ├── server-access.md     # инструкция SSH-подключения
-    └── pipeline.md
+├── deploy.sh
+├── requirements.txt
+├── .env.example
+├── src/
+│   ├── main.py
+│   ├── bot_runner.py        # точка входа для Telegram-бота
+│   ├── bot/
+│   │   ├── bot.py           # инициализация Application
+│   │   └── handlers.py      # обработчик /start
+│   ├── skills/
+│   └── config/
+├── tests/                   # 169 тестов, все проходят
+└── .claude/
+    ├── skills/              # test-all, deploy, project-snapshot
+    ├── commands/            # commit-push-pr
+    ├── agents/              # code-reviewer, test-writer
+    └── hooks/               # auto-lint, block-dangerous
 ```
 
 ## MCP-серверы
@@ -51,14 +51,15 @@ pm-claw/
 - **Firewall:** UFW (OpenSSH разрешён)
 - **Софт:** Python 3.12.3, git 2.43.0, pip, venv
 - **SSH-ключ:** ed25519, без passphrase
-- **Сервис:** pm-claw.service (systemd, Restart=on-failure)
+- **SSH-ключ деплоя:** C:\Users\Redmi\.ssh\id_ed25519_new (без passphrase)
+- **SSH alias:** hetzner → deploy@178.104.82.11
+- **Сервис:** pm-claw.service (systemd), запускает src/bot_runner.py
 - **Деплой:** `bash deploy.sh` (DEPLOY_SERVER из .env)
 - **Логи:** `journalctl -u pm-claw`
 
 ## Открытые issues
 
 - #4 — Telegram briefing (scheduled)
-- #5 — Competitor research (реализован, можно закрыть)
 
 ## Бэклог
 
@@ -85,3 +86,4 @@ pm-claw/
 
 - **[дата старта]** — начальное состояние: 4 скилла, 146 тестов, 2 MCP-сервера
 - **2026-03-17** — deploy.sh, systemd-сервис, docs/server-access.md
+- **2026-03-17** — Telegram-бот: базовая инфраструктура, /start handler, деплой на Hetzner как systemd-сервис
