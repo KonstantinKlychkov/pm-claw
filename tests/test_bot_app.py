@@ -93,7 +93,7 @@ def test_create_app_help_command_uses_cmd_help(app: Application) -> None:
 
 # ---------------------------------------------------------------------------
 # create_app — token propagation
-# ---------------------------------------------------------------------------
+# -------------------------------------------------https://github.com/KonstantinKlychkov/pm-claw/pull/11/conflict?name=tests%252Ftest_bot_app.py&base_oid=049b8e2311294c713c31edc1f48a3213fd1cfa32&head_oid=b8f68378c2d2e51a5d18c79865a903d0ad6fd4a1--------------------------
 
 
 def test_create_app_calls_get_telegram_token() -> None:

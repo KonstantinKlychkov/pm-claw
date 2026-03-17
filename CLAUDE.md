@@ -74,10 +74,6 @@ and sends scheduled briefings.
 - code-reviewer — read-only Python code review (bugs, style, security)
 - test-writer — writes and runs pytest tests for modules
 
-## Hooks
-- PostToolUse (Write|Edit) — auto-lint Python files with ruff after every write
-- PreToolUse (Bash) — block dangerous shell commands (rm -rf /, fork bombs, etc.)
-
 ## MCP Servers
 - GitHub MCP — issue management, PR workflows (local scope, token not committed)
 - Context7 — up-to-date library documentation (user scope)
